@@ -16,24 +16,13 @@ const App = () =>{
     ) 
     //Winner declaration
     let status = 'Next player: '+ (squaresValue.xIsNext ? 'X' : 'O');
-    console.log(squaresValue.history.slice(0, squaresValue.stepNumber+1))
-    // console.log(squaresValue.stepNumber + 1)
-    const history = squaresValue.history.slice(0, squaresValue.stepNumber+1);
-    const current = squaresValue.history[squaresValue.stepNumber];
-    const winner = calculateWinner(current.squares);
-    //console.log(history)
-    const squares = current.squares.slice();
-    const moves = history.map((step, move) => {
-      const desc = move ?
-        'Go to move #' + move :
-        'Go to game start';
-      return (
-        <li key={move}>
-          <button onClick={() => jumpTo(move)}>{desc}</button>
-        </li>
-      );
-    });
-    const handleClick = (i) => {        
+    
+
+    const handleClick = (i) => { 
+        console.log(squaresValue.history.slice(0, squaresValue.stepNumber+1));
+        const history = squaresValue.history.slice(0, squaresValue.stepNumber+1);
+        const current = squaresValue.history[squaresValue.stepNumber];
+        const squares = current.squares.slice();       
         if (calculateWinner(squares) || squares[i]) {
         return;
         }
@@ -46,9 +35,37 @@ const App = () =>{
             xIsNext: !squaresValue.xIsNext,
         });
     }
-    //console.log(history)
 
-    //console.log(current.squares)
+    
+    // jump To
+    const jumpTo = (step) => {
+      setSquareValue({
+        history: squaresValue.history,
+        stepNumber: step,
+        xIsNext: (step % 2) === 0
+      });
+    }
+    
+
+    // moves
+    console.log(squaresValue.history);
+    const history = squaresValue.history;
+    const current = squaresValue.history[squaresValue.stepNumber];
+    const winner = calculateWinner(current.squares);
+
+    const moves = history.map((step, move) => {
+      const desc = move ?
+        'Go to move #' + move :
+        'Go to game start';
+      return (
+        <li key={move}>
+          <button onClick={() => jumpTo(move)}>{desc}</button>
+        </li>
+      );
+    });
+
+// WINNER
+
     if (winner) {
       console.log(winner)
       status = 'Winner: ' + winner;
@@ -79,12 +96,7 @@ const App = () =>{
         }
       return null;
     }
-    const jumpTo = (step) => {
-      setSquareValue({
-        stepNumber: step,
-        xIsNext: (step % 2) === 0
-      });
-    }
+
  return (
     <div className="game">
       <div className="game-board">
