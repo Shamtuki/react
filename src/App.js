@@ -16,9 +16,9 @@ const App = () =>{
     ) 
     //Winner declaration
     let status = 'Next player: '+ (squaresValue.xIsNext ? 'X' : 'O');
-    console.log(squaresValue.history.squares)
+    console.log(squaresValue.history.slice(0, squaresValue.stepNumber+1))
     // console.log(squaresValue.stepNumber + 1)
-    const history = squaresValue.history.slice(0, squaresValue.stepNumber + 1);
+    const history = squaresValue.history.slice(0, squaresValue.stepNumber+1);
     const current = squaresValue.history[squaresValue.stepNumber];
     const winner = calculateWinner(current.squares);
     //console.log(history)
